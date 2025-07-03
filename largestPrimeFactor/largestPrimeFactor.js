@@ -73,18 +73,18 @@ function largestPrimeFactor(number) {
     let qu = number;
     while (qu % 2 === 0) {
       ld = 2;
-      qu = qu / 2;
+      qu /= 2;
     }
-    console.log(qu)
+
     let di = 3;
     while (qu > 1) {
       while (qu % di === 0) {
-        qu = qu / di;
+        qu /= di;
         ld = di;
       }
-      di = di + 2;
+      di += 2;
     }
     return ld;
 }
 
-console.log(largestPrimeFactor(19));
+console.log(largestPrimeFactor(21));
