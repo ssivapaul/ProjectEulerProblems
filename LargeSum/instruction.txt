@@ -1,0 +1,26 @@
+
+/*
+function splitStr(iStr, cSize) {
+  const result = [];
+  for (let i = 0; i < iStr.length; i += cSize) {
+    result.push(iStr.slice(i, i + cSize));
+  }
+  return result;
+}
+
+const fiftyCharString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX";
+const tenCharChunks = splitStringIntoChunks(fiftyCharString, 10);
+console.log(tenCharChunks);
+// Expected output: ["abcdefghij", "klmnopqrst", "uvwxyzABCD", "EFGHIJKLMN", "OPQRSTUVWX"]
+
+
+// Only change code above this line
+
+
+//largeSum(testNums);
+
+
+Problem 13: Large sum
+Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+
+*/
