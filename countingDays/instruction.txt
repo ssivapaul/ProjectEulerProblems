@@ -1,0 +1,116 @@
+Problem 19: Counting Sundays
+You are given the following information, but you may prefer to do some research for yourself.
+
+1 Jan 1900 was a Monday.
+Thirty days has September,
+April, June and November.
+All the rest have thirty-one,
+Saving February alone,
+Which has twenty-eight, rain or shine.
+And on leap years, twenty-nine.
+A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
+How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+
+1. countingSundays(1943, 1946) should return a number.
+Waiting:2. countingSundays(1943, 1946) should return 6.
+Waiting:3. countingSundays(1995, 2000) should return 10.
+Waiting:4. countingSundays(1901, 2000) should return 171.
+
+
+
+
+
+1) Zeller’s Rule
+F=k+ [(13*m-1)/5] +D+ [D/4] +[C/4]-2*C where
+
+k is  the day of the month.
+m is the month number.
+D is the last two digits of the year.
+C is the first two digits of the year.
+
+Note:
+According to Zeller’s rule the month is counted as follows:
+ March is 1, April is 2….. January is 11 and February is 12.
+So the year starts from March and ends with February. So if the given date has month as January or February subtract 1 from the year. For example:
+For 1st January 1998 subtract 1 from 1998 i.e. 1998-1=1997 and use 1997 for calculating D.
+Discard all the decimal values and then find the final value of F.
+
+After getting the value of F, divide it by 7.The value of F can be either positive or negative. If it is negative, let us suppose F = -15. When we divide by 7 we have to find the greatest multiple of 7 less than -15, so the remainder will be positive (or zero). -21 is the greatest multiple of 7 less than -15, so the remainder is 6 since -21 + 6 = -15.
+
+Alternatively, we can say that -7 goes into -15 twice, making -14 and leaving a remainder of -1.If we add 7 since the remainder is negative i.e. -1 + 7 we again get 6 as remainder. After getting the remainder we can find the day of the week for the given date. Following are the values for the corresponding remainders:
+
+Sun	Mon	Tue	Wed	Thurs	Fri	Sat
+0	1	2	3	4	5	6
+ 
+
+Examples for day calculation using Zeller’s Rule:
+Let us calculate the day for the following dates:
+1st April 1983 and 27th February 2023.
+A) 1st April 1983:
+Here
+k = 1
+m=2
+D=83
+C=19.
+
+Putting the values in the formula, we get,
+F= 1+ [(13*2-1)/5] +83+83/4+19/4-2*19
+= 1+ [(26-1)/5]+83+20.75+4.75-38
+= 1+25+83+20+4-38                 (discarding the decimal values)
+= 133-38
+= 75
+
+After calculating F divide it by 7 and get the remainder.
+
+78/7=11 Quotient
+5-Remainder
+
+Therefore, the day on 1st April 1983 was Friday since the remainder is 5.
+
+
+
+2) The Key Value Method
+The Key Value method uses codes for different months and years to calculate the day of the week. It would be easier if one is able to memorize the codes which are very easy to learn.
+
+Steps:
+
+Take the last 2 digits of the year.
+Divide it by 4 and discard any remainder.
+Add the day of the month to the value obtained in step 2.
+Add the month’s key value, from the following table to the value obtained in step 3.
+Jan	Feb	Mar	Apr	May	June	July	Aug	Sept	Oct	Nov	Dec
+1	4	4	0	2	5	0	3	6	1	4	6
+If the date is in January or February of a leap year, subtract 1 from step 4.
+Add the year (century) code from the following table.
+1700s	1800s	1900s	2000s
+4	2	0	6
+Suppose the year is not in the above table.  In this case all we have to do is add or subtract 400 until we have a year (century) that is in the table. Then get the code for the year from the above table and add the value to the previous step (our running total).
+
+Add the last two digits of the year to the value we obtained in the previous step.
+Divide this value by 7 and take the remainder. Get the day from the following table based on the value of the remainder.
+Sun	Mon	Tue	Wed	Thurs	Fri	Sat
+1	2	3	4	5	6	0
+Now, we will try to implement the above method by taking two examples, one for a normal year and other for a leap year.
+
+Let us take 19th November 2582 as an example.
+
+Take the last 2 digits of the year. In our case, this is 82.
+Divide it by 4 and discard any remainder. 82 / 4 = 20, remainder 2, so we take only 20 discarding 2 (remainder).
+Add the day of the month. In our example, 20 + 19 = 39.
+The month in our example is November, which has the key value of 4. Therefore, 39 + 4 = 43.
+Our example year is 2582, and the 2500s aren’t in the table. In this case all we have to do is add or subtract 400 until we have a year (century) that is in the table. 2582 – 400 = 2182. 2100 is also not in the table. So we again subtract 2182-400=1782.Now we look at the table for the 1700s, and get the code 4. Now we add this to our running total: 43 + 4 = 47.
+Add the last two digits of the year to the value we obtained in the previous step i.e. 47 + 82 = 129.
+Divide this value by 7 and take the remainder.129/7=18, remainder is 3.
+Here, the remainder is 3. So the day on 19th November 2582 will be Tuesday.
+
+Let us take 1st January 2008(leap year) as another example.
+
+Take the last 2 digits of the year. In our case, this is 08.
+Divide it by 4 and discard any remainder. 08 / 4 = 02.
+Add the day of the month. In our example, 02 + 01 = 03.
+The month in our example is January, which has the key value of 1. Therefore, 03 + 01 = 04.
+Since the date is in January of a leap year, subtract 1 from step 4              i.e. 04 – 01 = 03.
+Our example year is 2008.Now we look at the table for the 2000s, and get the code 6. Now we add this to our running total: 03 + 06 = 09.
+Add the last two digits of the year to the value we obtained in the previous step i.e. 09 + 08 = 17.
+Divide this value by 7 and take the remainder.17/7=2, remainder is 3.
+Here, the remainder is 3. So the day on 19th November 2582 will be Tuesday.
