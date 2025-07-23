@@ -17,6 +17,65 @@ Waiting:3. digitnPowers(3) should return 1301.
 Waiting:4. digitnPowers(4) should return 19316.
 Waiting:5. digitnPowers(5) should return 443839.
 
+
+The core idea:
+We’re looking for numbers that can be written as the sum of the n-th powers of their digits.
+
+So we ask:
+
+What’s the maximum possible digit-power sum for a number with d digits?
+
+The answer:
+
+max digit-power sum for 
+𝑑
+ digits
+=
+𝑑
+×
+9
+𝑛
+max digit-power sum for d digits=d×9 
+n
+ 
+Because:
+
+The largest digit is 9
+
+So the max each digit can contribute is 
+9
+𝑛
+9 
+n
+ 
+
+If a number has d digits, its maximum possible sum of n-th powers of digits is:
+
+9
+𝑛
++
+9
+𝑛
++
+⋯
++
+9
+𝑛
+=
+𝑑
+×
+9
+𝑛
+9 
+n
+ +9 
+n
+ +⋯+9 
+n
+ =d×9 
+n
+
+
 So when does this estimation become invalid?
 We need to find the largest number of digits d such that:
 
