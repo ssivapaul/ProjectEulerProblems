@@ -6,42 +6,36 @@ let isPrime = (n) => {
     }
     return true
 }
+//-----------------------------
 
-lst =[]
-for(let i = 11; i < 1000000; i++) {
-    if(isPrime(i)) {
+let n = 10
+let count = 0
+TP =[]
+let p = 10
+while (true) {
+    if(isPrime(p)) {
         let prime = true
-        let arrL = i.toString().split('')
-        let n = arrL.length
+        let P = p.toString().split('')
+        let pL = [...P]
+        let pR = [...P]
+        let n = P.length
         while (n-- > 0) {
-            if(!isPrime(Number(arrL.join('')))) {
+            if(!isPrime(Number(pL.join(''))) || !isPrime(Number(pR.join('')))) {
                 prime = false
                 break
             }
-            arrL.shift()
+            pL.shift()
+            pR.pop()
         }
-        if(prime) lst.push(i)
+        if(prime) TP.push(p)
     }
+    if (TP.length >= n) break
+    p++
 }
 
-let finalLst = []
-for(let l of lst) {
-    let prime = true
-    let arrR = l.toString().split('')
-    let n = arrR.length
-    while (n-- > 0) {
-        if(!isPrime(Number(arrR.join('')))) {
-            prime = false
-            break
-        }
-        arrR.pop()
-    }
-    if(prime) finalLst.push(l)
-}
-
-//console.log(finalLst)
 let sum = 0
-for(let f of finalLst.slice(0, 11)) {
-    sum += f
+for(let p of TP) {
+    sum += p
 }
-console.log(sum)
+console.log(TP)
+console.log("n: ", n, "Sum: ", sum)
