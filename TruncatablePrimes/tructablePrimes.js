@@ -8,7 +8,7 @@ function truncatablePrimes(n) {
   }
 //-----------------------------
 
-  TP =[]
+  let TP =[]
   let p = 10
   while (true) {
     if(isPrime(p)) {
@@ -17,6 +17,7 @@ function truncatablePrimes(n) {
       let pL = [...P]
       let pR = [...P]
       let n = P.length
+      //--------------------------
       while (n-- > 0) {
         if(!isPrime(Number(pL.join(''))) || !isPrime(Number(pR.join('')))) {
           prime = false
@@ -25,6 +26,7 @@ function truncatablePrimes(n) {
         pL.shift()
         pR.pop()
       }
+      //--------------------------
       if(prime) TP.push(p)
     }
     if (TP.length >= n) break
