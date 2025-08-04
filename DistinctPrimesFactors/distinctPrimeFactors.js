@@ -13,33 +13,38 @@ function distinctPrimeFactors(targetNumPrimes, targetConsecutive) {
   let primes = [2]
   let getNextPrime = (i) => {
     let temp = i
+    let lastP = primes[primes.length - 1]
+    if(lastP > temp) return lastP
     while(true) {
       temp++
       if(isPrime(temp)) {
-        if(!primes.includes(temp)) primes.push(temp)
+         primes.push(temp)
         break
       }
     }
     return temp
   }
   //---------------------------------
+  //Main routine
   let numTrack = {}
   for (let i = 2; true; i++) {
     let temp = i
     let primeCount = targetNumPrimes
     for(let p of primes) {
-      if(primeCount == 0) { // met number of prime divisers
-        numTrack[i] = numTrack[i-1]?   numTrack[i-1] + 1 : 1
-        break
-      }
       let div = false
       while (temp % p == 0) {
         div = true
           temp /= p
       }
       if (div == true) primeCount-- // decrement prime counts
+        if(primeCount == 0) { // met number of prime divisers
+            numTrack[i] = numTrack[i-1]?   numTrack[i-1] + 1 : 1
+            break
+        }
+       if(p > temp) break
     }
     if(numTrack[i] === targetConsecutive) return i-targetNumPrimes+1
+    let lastP = primes[primes.length - 1]
     getNextPrime(i) // add to the primes list
   }
   return -1
