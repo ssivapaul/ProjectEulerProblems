@@ -1,0 +1,11 @@
+Problem 48: Self powers
+The series, 11 + 22 + 33 + ... + 1010 = 10405071317.
+
+Find the last ten digits of the series, 11 + 22 + 33 + ... + 10001000.
+
+Tests
+Waiting:1. selfPowers(10, 3) should return a number.
+Waiting:2. selfPowers(10, 3) should return 317.
+Waiting:3. selfPowers(150, 6) should return 29045.
+Waiting:4. selfPowers(673, 7) should return 2473989.
+Waiting:5. selfPowers(1000, 10) should return 9110846700.
