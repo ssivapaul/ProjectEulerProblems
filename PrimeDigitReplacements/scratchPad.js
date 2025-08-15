@@ -1,82 +1,52 @@
 
-/*
-let isPrime = (num) => {
-  if (num <= 1)  return false;
-  if (num === 2) return true;
-  if (num % 2 === 0) return false;
-  for (let i = 3; i <= Math.sqrt(num); i += 2) {
-    if (num % i === 0) return false;
-  }
-  return true;
-}
-*/
 
-let isPrime = (p) => {
-  let seive = new Array(p+1).fill(true);
-  seive[0] = seive[1] = false;
-  for (let i = 2; i * i <= p; i++) {
-    if (seive[i]) {
-      for (let j = i * i; j <= p; j += i) seive[j] = false;
-    }
- }
-    return seive[p]
-}
-//----------------------------------------------
-let Primes = (p) => {
-    let primes = [];
-    let seive = new Array(p+1).fill(true);
-    seive[0] = seive[1] = false;
-    let i = 2
-    while (i * i <= p) {
-        if (seive[i]) {
-            for (let j = i * i; j <= p; j += i) seive[j] = false;
-        }
-        i++
-    }
-    for (let i = 11; i <= p; i++) if (seive[i]) primes.push(i);
-    return primes
-}
-//-----------------------------------------------------
-let  mapBToStas = (bNum, n) => {
-  let d = bNum.toString().split(''); 
-  let r = [];
-
-  for (let i = 1; i < (1 << n); i++) {
-    let bin = i.toString(2).padStart(n, '0').split('');
-    let m = [...d]; 
-
-    for (let j = 0; j < n; j++) {
-      if (bin[j] === '1') m[j] = '*';
-    }
-    r.push(m.join(''));
-  }
-  return r;
-}
-//-----------------------------------------------
 let primeDigitReplacements = (num) => {
-    let c = []
-    let ssP = Primes(999999)
-    for(let p of ssP) c.push(mapBToStas(p, String(p).length-1));
-    let strP = [...new Set(c.flat())]
-    for(let sP of strP) {
-        let nP = []
-        let s = ''
-        let p = ''
-        let count = 0
-        for(let i = 0; i <= 9; i++) {
-            if(i == 0 && sP[i] == '*') continue
-            s = sP.slice(0)
-            p = s.replaceAll('*', i)
-            if(isPrime(parseInt(p))) {
-                nP.push(p) // Pushing to prime family array
-                count++ 
-                if(count >= num) return nP[0]
-            }
+    let LIMIT = 999999
+
+    let sieve = new Uint8Array(LIMIT + 1)
+    sieve.fill(1);
+    sieve[0] = sieve[1] = 0;
+    for (let i = 2; i * i <= LIMIT; i++) {
+        if (sieve[i]) {
+            for (let j = i * i; j <= LIMIT; j += i) sieve[j] = 0;
         }
     }
+    let primes = [];
+    for (let i = 11; i <= LIMIT; i++) if (sieve[i]) primes.push(i);
+    //console.log(primes)
+    let visited = new Set()
+    for(let p of primes) {
+        let c = String(p)
+        //let cD = String(p).split('')
+        //let len = cD.length
+        let len = c.length
+        for(let i = 1; i < (1 << len-1); i++) {
+            if(i === (1 << len) - 1) continue
+            let cD = c.split('')
+            for(let j = 0; j < len; j++) {
+                if(i & (1 << j)) cD[j] = '*'
+            }
+            let d = cD.join('')
+            //console.log(d)
+            if(visited.has(d)) continue
+            visited.add(d)
+
+            let pD = (d[0] === '*') ? [1,2,3,4,5,6,7,8,9] : [0,1,2,3,4,5,6,7,8,9]
+            let first = null
+            let count = 0
+            for(p of pD) {
+                let dP = Number(d.replace(/\*/g, p))
+                if(sieve[dP]) {
+                    count++
+                    if(first == null) first = dP
+                }
+            }
+            if(count >= num) return first
+        }
+    }
+    return 0
 }
 
 console.time("PrimeDigitReplacements")
 console.log(primeDigitReplacements(8))
 console.timeEnd("PrimeDigitReplacements")
-

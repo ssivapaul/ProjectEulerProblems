@@ -1,52 +1,59 @@
-let isPrime = (num) => {
-    if (num <= 1) return false;
-    for (let i = 2; i <= Math.sqrt(num); i++) {
-        if (num % i === 0) {
-            return false;
+function primeDigitReplacements(num) {
+    const LIMIT = 999;
+
+    // Sieve of Eratosthenes------------------------------
+    let sieve = new Uint8Array(LIMIT + 1);
+    sieve.fill(1);
+    sieve[0] = sieve[1] = 0;
+    for (let i = 2; i * i <= LIMIT; i++) {
+        if (sieve[i]) {
+            for (let j = i * i; j <= LIMIT; j += i) sieve[j] = 0;
         }
     }
-    return true;
-}
 
-//----------------------------------------------
-let Primes = (p) => {
+    // Helper to get primes--------------------------------
     let primes = [];
-    let seive = new Array(p+1).fill(true);
-    seive[0] = seive[1] = false;
-    let i = 2
-    while (i * i <= p) {
-        if (seive[i]) {
-            for (let j = i * i; j <= p; j += i) seive[j] = false;
-        }
-        i++
-    }
-    for (let i = 99; i <= p; i++) if (seive[i]) primes.push(i);
-    return primes
-}
-//---------------------------------------------------------------
+    for (let i = 11; i <= LIMIT; i++) if (sieve[i]) primes.push(i);
 
-let getPrimeAtIndex = (index) => {
-    if (index < 0) {
-        return "Index must be a non-negative integer.";
-    }
+    // Iterate over primes
+    let seenPatterns = new Set();
+    for (let p of primes) {
+        let str = String(p);
+        let len = str.length;
 
-    let count = 0;
-    let num = 2;
+        // Try all non-empty masks----------------------------
+        for (let mask = 1; mask < (1 << len); mask++) {
+            // Skip masks that replace all digits
+            if (mask === (1 << len) - 1) continue;
 
-    while (true) {
-        if (isPrime(num)) {
-            if (count === index) {
-                return num;
+            // Get pattern------------------------------------
+            let chars = str.split('');
+            for (let i = 0; i < len; i++) {
+                if (mask & (1 << i)) chars[i] = '*';
             }
-            count++;
+            let pattern = chars.join('');
+            //console.log(pattern)
+            if (seenPatterns.has(pattern)) continue;
+            seenPatterns.add(pattern);
+
+            // Determine replacement digits-------------------
+            let digits = (pattern[0] === '*') ? [1,2,3,4,5,6,7,8,9] : [0,1,2,3,4,5,6,7,8,9];
+
+            let count = 0;
+            let firstPrime = null;
+            for (let d of digits) {
+                let candidate = Number(pattern.replace(/\*/g, d));
+                if (sieve[candidate]) {
+                    count++;
+                    if (firstPrime === null) firstPrime = candidate;
+                }
+            }
+            if (count >= num) return firstPrime;
         }
-        num++;
     }
+    return 0;
 }
 
-
-
-console.time("scratchPad2")
-console.log(JSON.stringify(Primes(1000000), null, 2));
-//console.log(Primes(1000))
-console.timeEnd("scratchPad2")
+console.time("PDR");
+console.log(primeDigitReplacements(8)); // 121313
+console.timeEnd("PDR");

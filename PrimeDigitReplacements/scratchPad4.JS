@@ -46,11 +46,8 @@ let  mapBToStas = (baseNum, n) => {
 //------------------------------------------------
 
 console.time("scratchPad4")
-let c = []
-for(let p of Primes(999999)) c.push(mapBToStas(p, 2));
 
-console.log(c.flat())
-console.log([...new Set(c.flat())])
-console.log(Primes(999999))
 console.timeEnd("scratchPad4")
+
+console.log(3 & 4)
 
