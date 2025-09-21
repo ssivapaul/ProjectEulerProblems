@@ -13,4 +13,5 @@ console.log(newP)
 
 let p = []
 p.push(5, 9)
+p = [...p, 2]
 console.log(p)
