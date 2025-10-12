@@ -1,0 +1,33 @@
+Problem 67: Maximum path sum II
+By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.
+
+3
+7 4
+2 4 6
+8 5 9 3
+That is, 3 + 7 + 4 + 9 = 23.
+
+Find the maximum total from top to bottom in numTriangle, a 2D array defined in the background containing a triangle with one-hundred rows.
+
+Note: This is a much more difficult version of Problem 18. It is not possible to try every route to solve this problem, as there are 299 altogether! If you could check one trillion (1012) routes every second it would take over twenty billion years to check them all. There is an efficient algorithm to solve it. ;o)
+
+Tests
+Waiting:1. maximumPathSumII([[3, 0, 0, 0],[7, 4, 0, 0],[2, 4, 6, 0],[8, 5, 9, 3]]) should return a number.
+Waiting:2. maximumPathSumII([[3, 0, 0, 0],[7, 4, 0, 0],[2, 4, 6, 0],[8, 5, 9, 3]]) should return 23.
+Waiting:3. maximumPathSumII(numTriangle) should return 7273.
+
+Memoization Approach
+Input Structure: Represent the triangle as a 2D array or list of lists. 
+Recursive Function: Define a function, say max_path_sum(row, col), that finds the maximum path sum starting from the cell at (row, col). 
+Base Case: If the current row is the last row of the triangle, the maximum path sum is simply the value of the cell at (row, col). 
+Recursive Step: For any other cell, the maximum path sum is the value of the current cell plus the maximum of the results from two subproblems: the path going left-down max_path_sum(row + 1, col) and the path going right-down max_path_sum(row + 1, col + 1). 
+Memoization (Caching):
+Use a data structure, such as a 2D array or a map, to store the results of max_path_sum(row, col) once they are calculated. 
+Before computing a result, check if it's already in the cache. If so, return the cached value directly. 
+After computing a result, store it in the cache before returning it. 
+
+//memo[i][j] = triangle[i][j] + max(memo[i+1][j], memo[i+1][j+1]). 
+
+  20
+15 18
+20 50 13
