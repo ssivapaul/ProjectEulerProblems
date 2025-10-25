@@ -1,0 +1,18 @@
+
+
+let orderedFractions = (limit) => {
+    let gcd = (a, b) => {
+        while(b !== 0) { let t = b; b = a % b;  a = t }
+        return a
+    }
+
+    let num = 0, max = 0, n = 0
+    for(let d = limit; d > 4; d--) {
+        if(3 * d / 7 !== Math.floor(3 * d / 7)) {
+            n = Math.floor(3 * d / 7)
+            if(n/d > max && gcd(n, d) == 1) { max = n/d; num = n }
+        }
+    }
+    return num
+
+}
