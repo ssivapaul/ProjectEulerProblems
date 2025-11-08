@@ -65,7 +65,7 @@ const graphDFS = {
   F: ['C', 'E']
 };
 
-console.log("DFS Recursive Traversal:", dfsRecursive(graphDFS, 'A')); // Expected (example): ['A', 'B', 'D', 'E', 'F', 'C']
+console.log(dfsRecursive(graphDFS, 'A')); // Expected (example): ['A', 'B', 'D', 'E', 'F', 'C']
 
 function dfsIterative(graph, startNode) {
   const stack = [startNode]; // Initialize stack with the starting node
