@@ -46,6 +46,7 @@ const testMatrix2  = [
 console.time("PathSumThreeWays")
 console.log(pathSumThreeWays(testMatrix1));
 console.timeEnd("PathSumThreeWays")
+
 /*
 Tests
 Waiting:1. pathSumThreeWays(testMatrix1) should return a number.
