@@ -84,17 +84,18 @@ function sumAmicableNum(limit) {
   let aNum = []
   for (let a = 2; a < limit; a++) {
     let b = divSum(a);
-    console.log("a: ", a, "b: ", b)
     if (b !== a && divSum(b) === a) {
       total += a;
-      aNum.push(a)
+      aNum.push([a, b])
     }
   }
   console.log(aNum)
   return total;
 }
 
-console.log(sumAmicableNum(285));
+console.time("AmicableNumbers")
+console.log(sumAmicableNum(10000));
+console.timeEnd("AmicableNumbers")
 
 /*
 console.log(sumAmicableNum(10000)); // ➜ 31626 ✅
